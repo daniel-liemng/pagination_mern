@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 import App from './App';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+    <Routes>
+      <Route exact path='/page/:pageNumber' element={<App />} />
+      <Route exact path='/' element={<App />} />
+    </Routes>
+  </Router>,
   document.getElementById('root'),
 );

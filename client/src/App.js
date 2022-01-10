@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 const App = () => {
+  const params = useParams();
+
+  // Get pageNumber from URL
+  const pageNumber = params.pageNumber || 1;
+
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const [page, setPage] = useState(2);
+  // intial page value is from params:page extracted in URL -> send to server
+  const [page, setPage] = useState(pageNumber);
   const [pages, setPages] = useState(1);
 
   useEffect(() => {
