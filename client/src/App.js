@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import './App.css';
+import Pagination from './components/Pagination';
+import Card from './components/Card';
+
 const App = () => {
   const params = useParams();
 
   // Get pageNumber from URL
-  const pageNumber = params.pageNumber || 1;
+  const pageNumber = parseInt(params.pageNumber) || 1;
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -37,7 +41,25 @@ const App = () => {
     fetchPosts();
   }, [page]); // Re-render when page is changed
 
-  return <div>App</div>;
+  return (
+    <div className='app'>
+      {loading ? (
+        <h3 className='loading-text'>Loading...</h3>
+      ) : error ? (
+        <h3 className='error-text'>{error}</h3>
+      ) : (
+        <>
+          <Pagination page={page} pages={pages} changePage={setPage} />
+          <div className='app__posts'>
+            {posts.map((post, key) => (
+              <Card key={key} post={post} />
+            ))}
+          </div>
+          <Pagination page={page} pages={pages} changePage={setPage} />
+        </>
+      )}
+    </div>
+  );
 };
 
 export default App;
